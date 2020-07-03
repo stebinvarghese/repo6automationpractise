@@ -2,14 +2,19 @@ package com.automation.testCases;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -117,6 +122,49 @@ public  WebDriver driver;
 		FileUtils.copyFile(source, target);
 		System.out.println("Screenshot taken");
 	}
+	
+	
+	
+	
+	
+	public static void verifyLinkActive(String linkUrl)
+	{
+        try 
+        {
+           URL url = new URL(linkUrl);
+           
+           HttpURLConnection httpURLConnect=(HttpURLConnection)url.openConnection();
+           
+           httpURLConnect.setConnectTimeout(3000);
+           
+           httpURLConnect.connect();
+           
+           if(httpURLConnect.getResponseCode()==200)
+           {
+               System.out.println(linkUrl+" - "+httpURLConnect.getResponseMessage());
+            }
+          if(httpURLConnect.getResponseCode()==HttpURLConnection.HTTP_NOT_FOUND)  
+           {
+               System.out.println(linkUrl+" - "+httpURLConnect.getResponseMessage() + " - "+ HttpURLConnection.HTTP_NOT_FOUND);
+            }
+        } catch (Exception e) {
+           
+        }
+	
+	
+	
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
